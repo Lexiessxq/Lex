@@ -1,6 +1,6 @@
 module.exports = {
     apps: [{
-        name: "uptime-kuma",
+        name: "Lex",
         script: "./server/server.js",
     }]
 };
