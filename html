@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ HBO Max Premium Checker v4.0</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00a8e1;
+            --secondary: #8a2be2;
+            --dark: #0f0f0f;
+            --light-dark: #1a1a1a;
+            --light: #f5f5f5;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --purple: #9b59b6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark), var(--light-dark));
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: scale(0.98);
+            opacity: 0;
+            animation: containerEntrance 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes containerEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.98) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--purple));
+            animation: rainbowBorder 8s linear infinite;
+            z-index: 2;
+        }
+        
+        @keyframes rainbowBorder {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .container:hover {
+            transform: scale(1.01);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+        }
+        
+        header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            animation: rotate 25s linear infinite;
+            opacity: 0.4;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+            filter: drop-shadow(0 3px 8px rgba(0,0,0,0.4));
+            animation: pulse 2s infinite alternate, float 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.08); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            text-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            background: linear-gradient(90deg, white, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+            to { text-shadow: 0 0 15px rgba(255,255,255,0.6); }
+        }
+        
+        .version {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            animation: bounce 2s infinite, colorChange 5s infinite alternate;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes colorChange {
+            0% { color: var(--primary); }
+            50% { color: var(--secondary); }
+            100% { color: var(--purple); }
+        }
+        
+        .main-content {
+            padding: 30px 40px;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+            animation: slideInLeft 1s ease-out;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .input-section h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+        }
+        
+        .input-section h2 i {
+            margin-right: 12px;
+            font-size: 24px;
+            animation: iconPulse 2s infinite;
+        }
+        
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .input-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .input-box label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: #ccc;
+            font-weight: 500;
+        }
+        
+        .input-box input, .input-box textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 15px;
+            transition: all 0.4s;
+        }
+        
+        .input-box input:focus, .input-box textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(0, 168, 225, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .input-box textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 168, 225, 0.4);
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.6s;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 168, 225, 0.6);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1.2s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+        
+        .spinner::after {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--secondary);
+            animation: spin 1.5s linear infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading p {
+            font-size: 16px;
+            margin-top: 15px;
+            color: #aaa;
+        }
+        
+        .results {
+            display: none;
+            margin-top: 30px;
+            animation: fadeInUp 0.8s;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .result-header h3 {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+        }
+        
+        .result-header h3 i {
+            margin-right: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .stat {
+            background: rgba(255, 255, 255, 0.07);
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .stat:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .stat i {
+            margin-right: 8px;
+        }
+        
+        .stat.valid {
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        
+        .stat.invalid {
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        .stat.total {
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .account-list {
+            max-height: 350px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) rgba(255, 255, 255, 0.1);
+            margin-bottom: 25px;
+            animation: fadeIn 0.8s;
+        }
+        
+        .account-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .account-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .account-list::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+        
+        .account-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            animation: slideInRight 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .account-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+        
+        .account-info {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .account-email {
+            font-weight: 600;
+            color: white;
+        }
+        
+        .account-password {
+            color: #aaa;
+            font-size: 14px;
+            font-family: monospace;
+        }
+        
+        .account-status {
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            min-width: 90px;
+            justify-content: center;
+        }
+        
+        .status-valid {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        
+        .status-invalid {
+            background: rgba(231, 76, 60, 0.15);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        .status-valid i, .status-invalid i {
+            margin-right: 6px;
+        }
+        
+        .action-btns {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ccc;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: all 0.6s;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .action-btn:hover::before {
+            left: 100%;
+        }
+        
+        .action-btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .action-btn.copy {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .action-btn.copy:hover {
+            background: rgba(0, 168, 225, 0.15);
+        }
+        
+        .action-btn.export {
+            color: var(--success);
+            border-color: var(--success);
+        }
+        
+        .action-btn.export:hover {
+            background: rgba(46, 204, 113, 0.15);
+        }
+        
+        .action-btn.save {
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .action-btn.save:hover {
+            background: rgba(138, 43, 226, 0.15);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .social-link {
+            color: #777;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px) scale(1.2);
+        }
+        
+        /* Floating emojis */
+        .floating-emoji {
+            position: absolute;
+            font-size: 28px;
+            opacity: 0;
+            pointer-events: none;
+            animation: floatUp 4s ease-in forwards;
+            z-index: 100;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-10px) rotate(5deg) scale(1);
+            }
+            100% {
+                transform: translateY(-150px) rotate(20deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+        
+        /* Confetti effect */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f00;
+            opacity: 0;
+            animation: confettiFall 5s linear forwards;
+            z-index: 100;
+        }
+        
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .main-content {
+                padding: 25px;
+            }
+            
+            .logo img {
+                height: 40px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .stats {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .stat {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+            
+            .action-btns {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 20px;
+            }
+            
+            .input-box input, .input-box textarea {
+                padding: 12px 15px;
+            }
+            
+            .account-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .account-status {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/HBO_Max_Logo.svg/1200px-HBO_Max_Logo.svg.png" alt="HBO Max Logo">
+                <h1>Premium Checker v4.0</h1>
+            </div>
+            <span class="version">✨ PRO EDITION</span>
+        </header>
+        
+        <div class="main-content">
+            <div class="input-section">
+                <h2><i class="fas fa-crown"></i> HBO Max Premium Kontrol Aracı</h2>
+                
+                <div class="input-box">
+                    <label for="accounts"><i class="fas fa-user-lock"></i> Hesapları Girin (email:şifre formatında)</label>
+                    <textarea id="accounts" placeholder="ornek1@mail.com:sifre123
+ornek2@mail.com:parola456
+ornek3@mail.com:qwerty789"></textarea>
+                </div>
+                
+                <div class="input-box">
+                    <label for="threads"><i class="fas fa-tachometer-alt"></i> Kontrol Hızı (Thread Sayısı)</label>
+                    <input type="range" id="threads" min="1" max="10" value="5">
+                    <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                        <span>🐢 Yavaş</span>
+                        <span id="threadValue">5</span>
+                        <span>Hızlı 🚀</span>
+                    </div>
+                </div>
+                
+                <button class="btn" id="checkBtn">
+                    <i class="fas fa-play-circle"></i> HESAPLARI KONTROL ET
+                </button>
+            </div>
+            
+            <div class="loading" id="loadingSection">
+                <div class="spinner"></div>
+                <p><i class="fas fa-sync-alt fa-spin"></i> Hesaplar kontrol ediliyor, lütfen bekleyin...</p>
+                <p id="progressText">0 / 0 hesaplar kontrol edildi</p>
+                <div id="loadingEmojis"></div>
+            </div>
+            
+            <div class="results" id="resultsSection">
+                <div class="result-header">
+                    <h3><i class="fas fa-clipboard-check"></i> Kontrol Sonuçları</h3>
+                    <div class="stats">
+                        <div class="stat total">
+                            <i class="fas fa-database"></i> <span id="totalCount">0</span> Toplam
+                        </div>
+                        <div class="stat valid">
+                            <i class="fas fa-check-circle"></i> <span id="validCount">0</span> Geçerli
+                        </div>
+                        <div class="stat invalid">
+                            <i class="fas fa-times-circle"></i> <span id="invalidCount">0</span> Geçersiz
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="account-list" id="accountList">
+                    <!-- Results will be added here -->
+                </div>
+                
+                <div class="action-btns">
+                    <button class="action-btn copy" id="copyValidBtn">
+                        <i class="fas fa-copy"></i> Geçerlileri Kopyala
+                    </button>
+                    <button class="action-btn export" id="exportBtn">
+                        <i class="fas fa-file-export"></i> Dışa Aktar
+                    </button>
+                    <button class="action-btn save" id="saveBtn">
+                        <i class="fas fa-save"></i> Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div>© 2023 HBO Max Premium Checker | Tüm hakları saklıdır</div>
+            <div>v4.0 | Developed with <i class="fas fa-heart" style="color: #e74c3c; animation: heartbeat 1.5s infinite;"></i> by YourName</div>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const checkBtn = document.getElementById('checkBtn');
+            const accountsInput = document.getElementById('accounts');
+            const threadsInput = document.getElementById('threads');
+            const threadValue = document.getElementById('threadValue');
+            const loadingSection = document.getElementById('loadingSection');
+            const loadingEmojis = document.getElementById('loadingEmojis');
+            const progressText = document.getElementById('progressText');
+            const resultsSection = document.getElementById('resultsSection');
+            const accountList = document.getElementById('accountList');
+            const totalCount = document.getElementById('totalCount');
+            const validCount = document.getElementById('validCount');
+            const invalidCount = document.getElementById('invalidCount');
+            const copyValidBtn = document.getElementById('copyValidBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            
+            // Update thread value display
+            threadsInput.addEventListener('input', function() {
+                threadValue.textContent = this.value;
+            });
+            
+            // Create floating emoji
+            function createFloatingEmoji(emoji, x, y) {
+                const floatingEmoji = document.createElement('div');
+                floatingEmoji.className = 'floating-emoji';
+                floatingEmoji.textContent = emoji;
+                floatingEmoji.style.left = x + 'px';
+                floatingEmoji.style.top = y + 'px';
+                document.body.appendChild(floatingEmoji);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    floatingEmoji.remove();
+                }, 4000);
+            }
+            
+            // Create confetti
+            function createConfetti() {
+                const colors = ['#00a8e1', '#8a2be2', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6'];
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.className = 'confetti';
+                        confetti.style.left = Math.random() * window.innerWidth + 'px';
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.width = Math.random() * 10 + 5 + 'px';
+                        confetti.style.height = Math.random() * 10 + 5 + 'px';
+                        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                        document.body.appendChild(confetti);
+                        
+                        setTimeout(() => {
+                            confetti.remove();
+                        }, 5000);
+                    }, i * 50);
+                }
+            }
+            
+            // Loading emojis
+            const loadingEmojiList = ['🔍', '📡', '🔌', '💻', '🖥️', '⌛', '⏳', '🔎', '🔒', '🔓'];
+            
+            function showLoadingEmoji() {
+                if (!loadingSection.style.display || loadingSection.style.display === 'none') return;
+                
+                const emoji = document.createElement('div');
+                emoji.textContent = loadingEmojiList[Math.floor(Math.random() * loadingEmojiList.length)];
+                emoji.style.position = 'absolute';
+                emoji.style.left = Math.random() * 80 + 10 + '%';
+                emoji.style.top = Math.random() * 50 + 25 + '%';
+                emoji.style.fontSize = Math.random() * 20 + 20 + 'px';
+                emoji.style.opacity = '0';
+                emoji.style.animation = 'fadeInOut 2s infinite';
+                emoji.style.animationDelay = Math.random() * 2 + 's';
+                
+                loadingEmojis.appendChild(emoji);
+                
+                setTimeout(() => {
+                    emoji.remove();
+                }, 2000);
+                
+                if (loadingSection.style.display === 'block') {
+                    setTimeout(showLoadingEmoji, 300);
+                }
+            }
+            
+            // Add CSS for loading emojis
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0%, 100% { opacity: 0; transform: scale(0.5); }
+                    50% { opacity: 1; transform: scale(1); }
+                }
+                
+                @keyframes heartbeat {
+                    0% { transform: scale(1); }
+                    25% { transform: scale(1.1); }
+                    50% { transform: scale(1); }
+                    75% { transform: scale(1.1); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Check button click handler
+            checkBtn.addEventListener('click', function() {
+                const accountsText = accountsInput.value.trim();
+                
+                if (!accountsText) {
+                    // Show warning animation
+                    checkBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> LÜTFEN HESAP GİRİN!';
+                    checkBtn.style.background = 'linear-gradient(90deg, var(--warning), #e67e22)';
+                    
+                    // Create floating emojis
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            createFloatingEmoji('⚠️', 
+                                Math.random() * window.innerWidth, 
+                                checkBtn.offsetTop + checkBtn.offsetHeight
+                            );
+                        }, i * 200);
+                    }
+                    
+                    setTimeout(() => {
+                        checkBtn.innerHTML = '<i class="fas fa-play-circle"></i> HESAPLARI KONTROL ET';
+                        checkBtn.style.background = 'linear-gradient(90deg, var(--primary), var(--secondary))';
+                    }, 2000);
+                    return;
+                }
+                
+                // Show loading
+                loadingSection.style.display = 'block';
+                loadingEmojis.innerHTML = '';
+                resultsSection.style.display = 'none';
+                checkBtn.disabled = true;
+                
+                // Start loading emojis
+                showLoadingEmoji();
+                
+                // Get accounts
+                const accounts = accountsText.split('\n').filter(line => line.trim() !== '');
+                const threads = parseInt(threadsInput.value);
+                
+                // Simulate checking with progress
+                let checked = 0;
+                const total = accounts.length;
+                totalCount.textContent = total;
+                
+                const progressInterval = setInterval(() => {
+                    checked = Math.min(checked + threads, total);
+                    progressText.textContent = `${checked} / ${total} hesaplar kontrol edildi`;
+                    
+                    if (checked >= total) {
+                        clearInterval(progressInterval);
+                    }
+                }, 300);
+                
+                // Simulate API call (in a real app, this would be an actual API call)
+                setTimeout(function() {
+                    clearInterval(progressInterval);
+                    processAccounts(accounts);
+                    
+                    // Celebration effects
+                    createConfetti();
+                    
+                    for (let i = 0; i < 15; i++) {
+                        setTimeout(() => {
+                            createFloatingEmoji(['🎉', '✨', '🎊', '🔥', '💎', '🚀', '⭐', '🏆', '🎯', '🏅'][Math.floor(Math.random() * 10)], 
+                                Math.random() * window.innerWidth, 
+                                window.innerHeight
+                            );
+                        }, i * 150);
+                    }
+                }, 2000 + (total * 100 / threads));
+            });
+            
+            // Process accounts
+            function processAccounts(accounts) {
+                let validAccounts = 0;
+                let invalidAccounts = 0;
+                
+                // Clear previous results
+                accountList.innerHTML = '';
+                
+                accounts.forEach((account, index) => {
+                    const [email, password] = account.split(':');
+                    const isValid = Math.random() > 0.7; // Random validation for demo
+                    
+                    if (isValid) validAccounts++;
+                    else invalidAccounts++;
+                    
+                    // Create account item with animation delay
+                    setTimeout(() => {
+                        const accountItem = document.createElement('div');
+                        accountItem.className = 'account-item';
+                        accountItem.style.animationDelay = `${index * 0.05}s`;
+                        
+                        accountItem.innerHTML = `
+                            <div class="account-info">
+                                <span class="account-email">${email || 'N/A'}</span>
+                                <span class="account-password">${password ? '•'.repeat(8) : 'N/A'}</span>
+                            </div>
+                            <div class="account-status ${isValid ? 'status-valid' : 'status-invalid'}">
+                                <i class="fas ${isValid ? 'fa-check' : 'fa-times'}"></i>
+                                ${isValid ? 'GEÇERLİ' : 'GEÇERSİZ'}
+                            </div>
+                        `;
+                        
+                        accountList.appendChild(accountItem);
+                    }, index * 50);
+                });
+                
+                // Update stats
+                validCount.textContent = validAccounts;
+                invalidCount.textContent = invalidAccounts;
+                
+                // Hide loading and show results
+                setTimeout(() => {
+                    loadingSection.style.display = 'none';
+                    resultsSection.style.display = 'block';
+                    checkBtn.disabled = false;
+                }, 500);
+            }
+            
+            // Copy valid accounts
+            copyValidBtn.addEventListener('click', function() {
+                // In a real app, this would copy only valid accounts
+                navigator.clipboard.writeText(accountsInput.value)
+                    .then(() => {
+                        copyValidBtn.innerHTML = '<i class="fas fa-check"></i> KOPYALANDI!';
+                        createFloatingEmoji('📋', 
+                            copyValidBtn.offsetLeft + copyValidBtn.offsetWidth/2, 
+                            copyValidBtn.offsetTop
+                        );
+                        setTimeout(() => {
+                            copyValidBtn.innerHTML = '<i class="fas fa-copy"></i> Geçerlileri Kopyala';
+                        }, 2000);
+                    });
+            });
+            
+            // Export button
+            exportBtn.addEventListener('click', function() {
+                exportBtn.innerHTML = '<i class="fas fa-check"></i> BAŞARILI!';
+                createFloatingEmoji('💾', 
+                    exportBtn.offsetLeft + exportBtn.offsetWidth/2, 
+                    exportBtn.offsetTop
+                );
+                setTimeout(() => {
+                    exportBtn.innerHTML = '<i class="fas fa-file-export"></i> Dışa Aktar';
+                }, 2000);
+            });
+            
+            // Save button
+            saveBtn.addEventListener('click', function() {
+                saveBtn.innerHTML = '<i class="fas fa-check"></i> KAYDEDİLDİ!';
+                createFloatingEmoji('🎯', 
+                    saveBtn.offsetLeft + saveBtn.offsetWidth/2, 
+                    saveBtn.offsetTop
+                );
+                setTimeout(() => {
+                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Kaydet';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
